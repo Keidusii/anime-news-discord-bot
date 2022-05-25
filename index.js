@@ -22,23 +22,25 @@ let parser = new Parser();
     feed.items.forEach(item => {
         let date = item.pubDate;
         date = Date.parse(date);
-
+      
         // check for anime category and any new posts within the last 60 seconds
-        if (currentTime - date < 60000 && item.categories.includes('Anime')) {
+        if (item.categories.includes('Anime')) {
             let strDate = item.pubDate;
             strDate = strDate.substring(5, 16);
-            console.log(item.title + ': ' + item.link + ': ' + strDate + '\n');
+            console.log(item);
 
             let embed = new MessageEmbed()
                 .setTitle(item.title)
-                .setURL(item.url)
+                .setURL(item.link)
                 .setDescription(item.contentSnippet)
                 .setColor('#9e9e9e')
                 .setFooter({text: 'Anime News Network | ' + strDate})
-            channel.send({embeds: [embed]})
+            
+            client.channels.cache.get("974014805709037668").send({embeds: [embed]})
+            console.log("sent news");
         }
     });
 
 
-    setTimeout(getNews, 60000);
+    setInterval(getNews, 60000);
 })();
