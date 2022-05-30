@@ -34,7 +34,7 @@ client.on('ready', () => {
           date = Date.parse(date);
           
           // check for anime category and any new posts within the last 60 seconds
-          if (currentTime - date < 60000 && item.categories.includes('Anime')) {
+          if (currentTime - date < 60000) {
               let strDate = item.pubDate;
               strDate = strDate.substring(5, 16);
   
@@ -47,8 +47,6 @@ client.on('ready', () => {
               channel.send({embeds: [embed]})
           }
       });
-  
-      
       setInterval(getNews, 60000);
   })();
 });
